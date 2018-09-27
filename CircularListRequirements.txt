@@ -1,0 +1,29 @@
+Goals:
+1) Use collection class hierarchy to develop a circular list
+2) Program a circular list based only on javadoc specifications
+
+Details:
+You'll be implementing CircularList and a nested class CircularListIterator. Use the javadoc to derive the contract and required methods.
+You can add your own helper methods or class variables if you want. No other custom classes outside the three with javadoc.
+
+A CircularList is an implementation of "LinkedList". It is a  "doubly linked" list of wrapped CircularNodes where
+the first node's previous node is the last node and the last node's next node is the first node. A CircularNode has a generic
+data element and a pointer to its previous node and its next node.
+
+//An example of nested classes for this project
+public class CircularList<E> extends AbstractSequentialList<E>{
+
+    //Methods and variable of CircularList go here
+    public class CircularListIterator<E> implements ListIterator<E>{
+
+        //Methods and variables of CircularListIterator go here
+
+        //Note: Methods and variables of CircularList can be accessed in
+        // the nested class.
+    }
+}
+
+
+
+Acceptance:
+I will be writing unit tests to ensure correct functionality.

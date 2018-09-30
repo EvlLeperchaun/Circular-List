@@ -2,6 +2,7 @@ public class asdf {
     private String s;
     private int i;
     private boolean lol;
+    private int x;
 
     public String getS() {
         return s;
@@ -25,5 +26,13 @@ public class asdf {
 
     public void setLol(boolean lol) {
         this.lol = lol;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public void setX(int x) {
+        this.x = x;
     }
 }

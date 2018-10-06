@@ -56,16 +56,16 @@ public class CircularList<E> extends java.util.AbstractSequentialList<E> {
         this.lastNode = lastNode;
     }
 
-    public CircularList.CircularListIterator<E> iterator() {
-        return new CircularListIterator();
+    public CircularList.CircularListIterator iterator() {
+        return new CircularListIterator(1);
     }
 
     public int size() {
         return 0;
     }
 
-    public CircularList.CircularListIterator<E> listIterator(int index) {
-        return new CircularListIterator();
+    public CircularList.CircularListIterator listIterator(int index) {
+        return new CircularListIterator(index);
     }
 
 

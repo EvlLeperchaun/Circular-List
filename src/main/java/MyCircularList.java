@@ -1,25 +1,28 @@
-import java.util.ListIterator;
 
-public class MyCircularList<E> extends java.util.AbstractSequentialList<E> {
+
+public class MyCircularList<E> {
     private int size;
-    private MyCircularList<E> firstNode;
-    private MyCircularList<E> lastNode;
+    private MyCircularNode<E> elem;
+    private MyCircularNode<E> firstNode;
+    private MyCircularNode<E> lastNode;
 
-    MyCircularList(){
-
-    }
-    public void add(int index, E element){
+    MyCircularList() {
 
     }
 
-    @Override
-    public ListIterator<E> listIterator(int index) {
-        return super.listIterator();
+    MyCircularList(E element) {
+        this.size = 1;
+        MyCircularNode<E> first = new MyCircularNode<E>(element);
+        this.setFirstNode(first);
+    }
+
+    public void add(int index, E element) {
+
     }
 
     @Override
     public int size() {
-        return 0;
+        return size;
     }
 
     public int getSize() {
@@ -30,24 +33,44 @@ public class MyCircularList<E> extends java.util.AbstractSequentialList<E> {
         this.size = size;
     }
 
-    public MyCircularList<E> getFirstNode() {
+    public E getFirstNode() {
         return firstNode;
     }
 
-    public void setFirstNode(MyCircularList<E> firstNode) {
+    public void setFirstNode(MyCircularNode<E> firstNode) {
         this.firstNode = firstNode;
     }
 
-    public MyCircularList<E> getLastNode() {
+    public E getLastNode() {
         return lastNode;
     }
 
-    public void setLastNode(MyCircularList<E> lastNode) {
+    public void setLastNode(MyCircularNode<E> lastNode) {
         this.lastNode = lastNode;
     }
 
+    class CircularIterator<E> {
+        private MyCircularNode<E> nextNode;
+        private MyCircularNode<E> previousNode;
+        private int index;
+        CircularIterator() {
 
-    class CircularIterator<E>{
+        }
+        CircularIterator(int index){
 
-}
+    }
+    class CircularListIterator<E>{
+        private MyCircularNode<E> nextNode;
+        private MyCircularNode<E> previousNode;
+        private int nextIndex;
+
+        CircularListIterator(){
+        }
+
+            public E next(){
+
+            }
+        }
+    }
+
 }

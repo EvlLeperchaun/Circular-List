@@ -1,16 +1,24 @@
-public class MyCircularNode<E> extends java.lang.Object {
+public class MyCircularNode<E> {
     private MyCircularNode<E> previousNode;
     private MyCircularNode<E> nextNode;
-    private E element;
+    private E elem;
+    private int index;
 
     MyCircularNode() {
     }
+    MyCircularNode(E element){
+        this.elem=element;
+        this.index=1;
+    }
 
     MyCircularNode(E elem, MyCircularNode<E> prev, MyCircularNode<E> next) {
+        this.previousNode=prev;
+        this.nextNode=next;
+        this.previousNode=prev;
     }
 
     public MyCircularNode<E> getPreviousNode() {
-        return previousNode;
+        return this.previousNode;
     }
 
     public void setPreviousNode(MyCircularNode<E> previousNode) {
@@ -18,7 +26,7 @@ public class MyCircularNode<E> extends java.lang.Object {
     }
 
     public MyCircularNode<E> getNextNode() {
-        return nextNode;
+        return this.nextNode;
     }
 
     public void setNextNode(MyCircularNode<E> nextNode) {
@@ -26,10 +34,10 @@ public class MyCircularNode<E> extends java.lang.Object {
     }
 
     public E getElement() {
-        return element;
+        return this.elem;
     }
 
     public void setElement(E element) {
-        this.element = element;
+        this.elem = element;
     }
 }

@@ -1,28 +1,34 @@
-
+import java.util.Iterator;
 
 public class MyCircularList<E> {
-    private int size;
-    private MyCircularNode<E> elem;
+    protected int size;
+    private E elem;
     private MyCircularNode<E> firstNode;
     private MyCircularNode<E> lastNode;
 
     MyCircularList() {
-
-    }
-
-    MyCircularList(E element) {
-        this.size = 1;
-        MyCircularNode<E> first = new MyCircularNode<E>(element);
-        this.setFirstNode(first);
+        this.size = 0;
     }
 
     public void add(int index, E element) {
-
+        if (this.size == 0) {
+            this.firstNode = new MyCircularNode<E>(element, this.firstNode, this.lastNode);
+            this.lastNode = new MyCircularNode<E>(element, this.firstNode, this.lastNode);
+            this.size++;
+        } else if (index == this.size + 1) {
+            MyCircularNode<E> newNode = new MyCircularNode<E>(element, this.lastNode.getPreviousNode(), this.firstNode);
+            this.lastNode.setNextNode(newNode);
+            this.lastNode = newNode;
+        }
     }
 
-    @Override
-    public int size() {
-        return size;
+    public E get(int index) {
+        int j =0;
+        Iterator<E> i = this.iterator(index);
+        while (j !=index){
+            return i.next();
+            j++;
+        }
     }
 
     public int getSize() {
@@ -33,43 +39,63 @@ public class MyCircularList<E> {
         this.size = size;
     }
 
-    public E getFirstNode() {
+    public MyCircularNode<E> getFirstNode() {
         return firstNode;
     }
 
-    public void setFirstNode(MyCircularNode<E> firstNode) {
-        this.firstNode = firstNode;
+    public void setFirstNode(MyCircularNode<E> first) {
+        this.firstNode = first;
     }
 
-    public E getLastNode() {
+    public MyCircularNode<E> getLastNode() {
         return lastNode;
     }
 
     public void setLastNode(MyCircularNode<E> lastNode) {
-        this.lastNode = lastNode;
+        MyCircularNode<E> last = new MyCircularNode<E>(lastNode);
+        this.lastNode = last;
     }
 
-    class CircularIterator<E> {
-        private MyCircularNode<E> nextNode;
-        private MyCircularNode<E> previousNode;
-        private int index;
-        CircularIterator() {
-
-        }
-        CircularIterator(int index){
-
+    public Iterator<E> iterator(int i,MyCircularList<E> l) {
+        return new CircularListIterator(i);
     }
-    class CircularListIterator<E>{
+
+    class CircularListIterator implements Iterator<E> {
         private MyCircularNode<E> nextNode;
         private MyCircularNode<E> previousNode;
+        private MyCircularList<E> circ;
         private int nextIndex;
 
-        CircularListIterator(){
+        CircularListIterator(int index,MyCircularList<E> l) {
+            this.nextIndex = index;
+            this.circ=l;
+
         }
 
-            public E next(){
+        public boolean hasNext() {
+            return true;
+        }
 
+        public E next() {
+            int i=1;
+            if (i==this.nextIndex) {
+                return nextNode.getElement();
+            }else{
+                i++;
+                return this.nextNode.getDataElement();
             }
+        }
+
+        public int nextIndex(){
+            return this.nextIndex;
+        }
+
+        public int previousIndex(){
+           return this.nextIndex-1;
+        }
+
+        public void remove() {
+
         }
     }
 

@@ -1,13 +1,13 @@
-public class MyCircularNode<E> {
-    private MyCircularNode<E> previousNode;
-    private MyCircularNode<E> nextNode;
+public class CircularNode<E> {
+    private CircularNode<E> previousNode;
+    private CircularNode<E> nextNode;
     private E elem;
 
-    MyCircularNode() {
+    CircularNode() {
 
     }
 
-    MyCircularNode(E element, MyCircularNode<E> prev, MyCircularNode<E> next) {
+    CircularNode(E element, CircularNode<E> prev, CircularNode<E> next) {
         this.previousNode = prev;
         this.nextNode = next;
         this.elem=element;
@@ -17,19 +17,19 @@ public class MyCircularNode<E> {
         return elem;
     }
 
-    public MyCircularNode<E> getPreviousNode() {
+    public CircularNode<E> getPreviousNode() {
         return this.previousNode;
     }
 
-    public void setPreviousNode(MyCircularNode<E> previousNode) {
+    public void setPreviousNode(CircularNode<E> previousNode) {
         this.previousNode = previousNode;
     }
 
-    public MyCircularNode<E> getNextNode() {
+    public CircularNode<E> getNextNode() {
         return this.nextNode;
     }
 
-    public void setNextNode(MyCircularNode<E> nextNode) {
+    public void setNextNode(CircularNode<E> nextNode) {
         this.nextNode = nextNode;
     }
 

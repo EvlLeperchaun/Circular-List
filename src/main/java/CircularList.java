@@ -1,23 +1,23 @@
-import java.util.AbstractSequentialList;
 import java.util.Iterator;
+import java.util.ListIterator;
 
-public class MyCircularList<E> extends java.util.AbstractSequentialList<E> {
+public class CircularList<E> extends java.util.AbstractSequentialList<E> {
     private int size;
     private E elem;
-    private MyCircularNode<E> firstNode;
-    private MyCircularNode<E> lastNode;
+    private CircularNode<E> firstNode;
+    private CircularNode<E> lastNode;
 
-    MyCircularList() {
+    CircularList() {
         this.size = 0;
     }
 
     public void add(int index, E element) {
         if (this.size == 0) {
-            this.firstNode = new MyCircularNode<E>(element, this.firstNode, this.lastNode);
-            this.lastNode = new MyCircularNode<E>(element, this.firstNode, this.lastNode);
+            this.firstNode = new CircularNode<E>(element, this.firstNode, this.lastNode);
+            this.lastNode = new CircularNode<E>(element, this.firstNode, this.lastNode);
             this.size++;
         } else if (index == this.size + 1) {
-            MyCircularNode<E> newNode = new MyCircularNode<E>(element, this.lastNode.getPreviousNode(), this.firstNode);
+            CircularNode<E> newNode = new CircularNode<E>(element, this.lastNode.getPreviousNode(), this.firstNode);
             this.lastNode.setNextNode(newNode);
             this.lastNode = newNode;
         }
@@ -40,23 +40,23 @@ public class MyCircularList<E> extends java.util.AbstractSequentialList<E> {
         this.size = size;
     }
 
-    public MyCircularNode<E> getFirstNode() {
+    public CircularNode<E> getFirstNode() {
         return firstNode;
     }
 
-    public void setFirstNode(MyCircularNode<E> first) {
+    public void setFirstNode(CircularNode<E> first) {
         this.firstNode = first;
     }
 
-    public MyCircularNode<E> getLastNode() {
+    public CircularNode<E> getLastNode() {
         return lastNode;
     }
 
-    public void setLastNode(MyCircularNode<E> lastNode) {
+    public void setLastNode(CircularNode<E> lastNode) {
         this.lastNode = lastNode;
     }
 
-    public MyCircularList.CircularListIterator<E> iterator() {
+    public CircularList.CircularListIterator<E> iterator() {
         return new CircularListIterator();
     }
 
@@ -64,14 +64,14 @@ public class MyCircularList<E> extends java.util.AbstractSequentialList<E> {
         return 0;
     }
 
-    public MyCircularList.CircularListIterator<E> listIterator(int index) {
+    public CircularList.CircularListIterator<E> listIterator(int index) {
         return new CircularListIterator();
     }
 
 
-    class CircularListIterator implements Iterator<E> {
-        private MyCircularNode<E> nextNode;
-        private MyCircularNode<E> previousNode;
+    class CircularListIterator implements ListIterator<E> {
+        private CircularNode<E> nextNode;
+        private CircularNode<E> previousNode;
         private int nextIndex;
 
         CircularListIterator(int index) {
@@ -86,7 +86,31 @@ public class MyCircularList<E> extends java.util.AbstractSequentialList<E> {
             return firstNode.getDataElement();
         }
 
+        public boolean hasPrevious() {
+            return false;
+        }
+
+        public E previous() {
+            return null;
+        }
+
+        public int nextIndex() {
+            return 0;
+        }
+
+        public int previousIndex() {
+            return 0;
+        }
+
         public void remove() {
+
+        }
+
+        public void set(E e) {
+
+        }
+
+        public void add(E e) {
 
         }
     }

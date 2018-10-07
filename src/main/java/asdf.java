@@ -34,6 +34,6 @@ public class asdf {
 
     public void setX(int x) {
         this.x = x;
-        CircularList.CircularListIterator it = new CircularList.CircularListIterator(2)
+        //CircularList.CircularListIterator it = new CircularList.CircularListIterator(2);
     }
 }

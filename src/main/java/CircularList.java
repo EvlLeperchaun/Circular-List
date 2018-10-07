@@ -9,27 +9,47 @@ public class CircularList<E> extends java.util.AbstractSequentialList<E> {
 
     CircularList() {
         this.size = 0;
+        this.firstNode=new CircularNode<E>();
+        this.lastNode=new CircularNode<E>();
+        this.firstNode.setNextNode(this.lastNode);
+        this.lastNode.setNextNode(this.firstNode);
+        this.firstNode.setPreviousNode(this.lastNode);
+        this.lastNode.setPreviousNode(this.firstNode);
     }
 
     public void add(int index, E element) {
         if (this.size == 0) {
-            this.firstNode = new CircularNode<E>(element, this.firstNode, this.lastNode);
-            this.lastNode = new CircularNode<E>(element, this.firstNode, this.lastNode);
-            this.size++;
+            this.firstNode.setElement(element);
+            this.lastNode.setElement(element);
+            this.firstNode.setNextNode(this.lastNode);
+            this.lastNode.setNextNode(this.firstNode);
         } else if (index == this.size + 1) {
-            CircularNode<E> newNode = new CircularNode<E>(element, this.lastNode.getPreviousNode(), this.firstNode);
+            CircularNode<E> newNode = new CircularNode<E>(element, this.lastNode, this.firstNode);
             this.lastNode.setNextNode(newNode);
             this.lastNode = newNode;
+        } else if (index > 0) {
+            int i = 0;
+            CircularListIterator iter = this.iterator();
+            while (i < index) {
+               E e = iter.next();
+                i++;
+            }
+            CircularNode<E> newNode = new CircularNode<E>(element,iter.previousNode,iter.nextNode);
+            iter.nextNode.setPreviousNode(newNode);
+
         }
+        this.size++;
     }
 
     public E get(int index) {
-        int j = 0;
-        Iterator<E> i = this.iterator(index);
-        while (j != index) {
-            return i.next();
-            j++;
+        int i = 0;
+        E e=null;
+        CircularListIterator iter = this.iterator();
+        while (i < index) {
+            e = iter.next();
+            i++;
         }
+       return e;
     }
 
     public int getSize() {
@@ -69,12 +89,18 @@ public class CircularList<E> extends java.util.AbstractSequentialList<E> {
     }
 
 
-    class CircularListIterator implements ListIterator<E> {
+    private class CircularListIterator implements ListIterator<E> {
         private CircularNode<E> nextNode;
         private CircularNode<E> previousNode;
         private int nextIndex;
 
         CircularListIterator(int index) {
+            CircularNode<E> n = firstNode;
+            for (int i = 1; i < index; i++) {
+                n = n.getNextNode();
+            }
+            this.nextNode = n;
+            this.previousNode = n.getPreviousNode();
             this.nextIndex = index;
         }
 
@@ -83,7 +109,14 @@ public class CircularList<E> extends java.util.AbstractSequentialList<E> {
         }
 
         public E next() {
-            return firstNode.getDataElement();
+            if (this.nextIndex < size) {
+                this.nextNode = this.nextNode.getNextNode();
+                this.previousNode=this.nextNode.getPreviousNode();
+            }else if (this.nextIndex==size){
+                this.nextNode=firstNode;
+                this.previousNode=lastNode;
+            }
+            return this.nextNode.getDataElement();
         }
 
         public boolean hasPrevious() {
@@ -95,11 +128,11 @@ public class CircularList<E> extends java.util.AbstractSequentialList<E> {
         }
 
         public int nextIndex() {
-            return 0;
+            return this.nextIndex;
         }
 
         public int previousIndex() {
-            return 0;
+            return this.nextIndex - 1;
         }
 
         public void remove() {
@@ -115,15 +148,4 @@ public class CircularList<E> extends java.util.AbstractSequentialList<E> {
         }
     }
 
-    public int nextIndex() {
-        return this.nextIndex;
-    }
-
-    public int previousIndex() {
-        return this.nextIndex - 1;
-    }
-
-    public void remove() {
-
-    }
 }

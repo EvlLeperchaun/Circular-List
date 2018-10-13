@@ -9,8 +9,8 @@ public class CircularList<E> extends java.util.AbstractSequentialList<E> {
 
     CircularList() {
         this.size = 0;
-        this.firstNode=new CircularNode<E>();
-        this.lastNode=new CircularNode<E>();
+        this.firstNode = new CircularNode<E>();
+        this.lastNode = new CircularNode<E>();
         this.firstNode.setNextNode(this.lastNode);
         this.lastNode.setNextNode(this.firstNode);
         this.firstNode.setPreviousNode(this.lastNode);
@@ -23,19 +23,42 @@ public class CircularList<E> extends java.util.AbstractSequentialList<E> {
             this.lastNode.setElement(element);
             this.firstNode.setNextNode(this.lastNode);
             this.lastNode.setNextNode(this.firstNode);
+            /*
+            System.out.println("first");
+            System.out.println(this.firstNode.getDataElement());
+            System.out.println("last");
+            System.out.println(this.lastNode.getDataElement());
+            */
+
         } else if (index == this.size + 1) {
+            CircularNode<E> temp = this.lastNode;
             CircularNode<E> newNode = new CircularNode<E>(element, this.lastNode, this.firstNode);
-            this.lastNode.setNextNode(newNode);
+            temp.setPreviousNode(newNode);
             this.lastNode = newNode;
+            this.lastNode.setPreviousNode(temp);
+            /*
+            System.out.println("first");
+            System.out.println(this.firstNode.getDataElement());
+            System.out.println("last");
+            System.out.println(this.lastNode.getDataElement());
+            */
+
         } else if (index > 0) {
             int i = 0;
-            CircularListIterator iter = this.iterator();
+            CircularListIterator iter = this.iterator(index);
             while (i < index) {
-               E e = iter.next();
+                E e = iter.next();
                 i++;
             }
-            CircularNode<E> newNode = new CircularNode<E>(element,iter.previousNode,iter.nextNode);
+            CircularNode<E> newNode = new CircularNode<E>(element, iter.previousNode, iter.nextNode);
+/*
+            System.out.println("previous");
+            System.out.println(iter.previousNode.getDataElement());
+            System.out.println("next");
+            System.out.println(iter.nextNode.getDataElement());
+*/
             iter.nextNode.setPreviousNode(newNode);
+            iter.previousNode.setNextNode(newNode);
 
         }
         this.size++;
@@ -43,13 +66,13 @@ public class CircularList<E> extends java.util.AbstractSequentialList<E> {
 
     public E get(int index) {
         int i = 0;
-        E e=null;
+        E e = null;
         CircularListIterator iter = this.iterator();
         while (i < index) {
             e = iter.next();
             i++;
         }
-       return e;
+        return e;
     }
 
     public int getSize() {
@@ -80,6 +103,10 @@ public class CircularList<E> extends java.util.AbstractSequentialList<E> {
         return new CircularListIterator(1);
     }
 
+    public CircularList.CircularListIterator iterator(int index) {
+        return new CircularListIterator(index);
+    }
+
     public int size() {
         return 0;
     }
@@ -99,8 +126,8 @@ public class CircularList<E> extends java.util.AbstractSequentialList<E> {
             for (int i = 1; i < index; i++) {
                 n = n.getNextNode();
             }
-            this.nextNode = n;
-            this.previousNode = n.getPreviousNode();
+            this.nextNode = n.getNextNode();
+            this.previousNode = n;
             this.nextIndex = index;
         }
 
@@ -109,13 +136,6 @@ public class CircularList<E> extends java.util.AbstractSequentialList<E> {
         }
 
         public E next() {
-            if (this.nextIndex < size) {
-                this.nextNode = this.nextNode.getNextNode();
-                this.previousNode=this.nextNode.getPreviousNode();
-            }else if (this.nextIndex==size){
-                this.nextNode=firstNode;
-                this.previousNode=lastNode;
-            }
             return this.nextNode.getDataElement();
         }
 
